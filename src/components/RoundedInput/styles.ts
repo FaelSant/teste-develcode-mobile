@@ -14,7 +14,6 @@ export const HeaderContainer = styled.View`
   width: 90%;
   align-items: center;
   justify-content: space-between;
-  background-color: ${theme.colors.white};
 `;
 export const InputBox = styled.View<{border?: string}>`
   flex-direction: row;
