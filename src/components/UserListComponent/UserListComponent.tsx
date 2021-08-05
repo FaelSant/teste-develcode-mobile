@@ -8,15 +8,17 @@ type userListProps = {
   name: string;
   imageUri: string;
   age: string;
+  onPress: () => void;
 };
 
 export const UserListComponent: React.FC<userListProps> = ({
   age,
   imageUri,
   name,
+  onPress,
 }) => {
   return (
-    <Container>
+    <Container onPress={onPress}>
       <Image
         source={{
           uri: imageUri,

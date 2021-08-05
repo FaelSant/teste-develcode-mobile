@@ -54,6 +54,9 @@ export const MainScreen: React.FC = () => {
           }
           renderItem={({item}) => (
             <UserListComponent
+              onPress={() =>
+                navigation.navigate('DetailUser', {selectedUser: item})
+              }
               age={DateFormater(item.age)}
               imageUri={item.photo_url}
               name={item.name}

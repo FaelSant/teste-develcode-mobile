@@ -2,10 +2,16 @@ import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import {userData} from '../models/userData';
 import api from '../services/api';
-
+import * as Yup from 'yup';
+import {useFormik} from 'formik';
 export const useUserController = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [userList, setUserList] = useState<userData[]>([]);
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('* Campo obrigatório'),
+    age: Yup.string().required('* Campo obrigatório'),
+  });
   const ListUsers = async () => {
     try {
       setLoading(true);
@@ -20,6 +26,14 @@ export const useUserController = () => {
     }
   };
 
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      age: '',
+    },
+    onSubmit: values => console.log(values),
+    validationSchema,
+  });
   useEffect(() => {
     ListUsers();
   }, []);
@@ -27,6 +41,7 @@ export const useUserController = () => {
     getController: {
       loading,
       userList,
+      formik,
     },
     handleController: {
       ListUsers,
