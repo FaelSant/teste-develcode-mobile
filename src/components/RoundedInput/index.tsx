@@ -20,8 +20,10 @@ interface RoundedInputProps {
   isMultline?: boolean;
   border?: string;
   labelColor?: string;
-  label: string;
+  label?: string;
   rightComponent?: ReactNode;
+  isEditable?: boolean;
+  onSelectDate?: () => void;
 }
 
 export const RoundedInput: React.FC<RoundedInputProps> = ({
@@ -34,6 +36,8 @@ export const RoundedInput: React.FC<RoundedInputProps> = ({
   valueOfInputText,
   label,
   rightComponent,
+  isEditable = true,
+  onSelectDate,
 }) => {
   const hasValidationError = !!(hasError && errorText);
   return (
@@ -48,9 +52,12 @@ export const RoundedInput: React.FC<RoundedInputProps> = ({
           labelColor={labelColor}
           value={valueOfInputText}
           onChangeText={onChangeText}
+          editable={isEditable}
         />
         {rightComponent && (
-          <RightComponentBox>{rightComponent}</RightComponentBox>
+          <RightComponentBox onPress={onSelectDate}>
+            {rightComponent}
+          </RightComponentBox>
         )}
       </InputBox>
     </Container>

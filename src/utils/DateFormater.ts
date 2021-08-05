@@ -1,4 +1,5 @@
 import moment from 'moment';
 export const DateFormater = (unformatedData: Date) => {
-  return moment(unformatedData).format('DD/MM/YYYY');
+  console.log(unformatedData);
+  return moment.utc(unformatedData).format('DD/MM/yyyy');
 };

@@ -12,12 +12,19 @@ import {DateFormater} from '../../utils/DateFormater';
 import {useState} from 'react';
 import RoundedInput from '../../components/RoundedInput';
 import {userData} from '../../models/userData';
+import {useEffect} from 'react';
+import {useIsFocused} from '@react-navigation/native';
 export const MainScreen: React.FC = () => {
   const navigation = useNavigation();
   const {getController, handleController} = useUserController();
   const [isInputOpen, setIsInputOpen] = useState<boolean>(false);
   const [value, setValue] = useState('');
   const [usersFiltered, setUsersFiltered] = useState<userData[]>([]);
+  const onFocus = useIsFocused();
+
+  useEffect(() => {
+    handleController.ListUsers();
+  }, [onFocus]);
   const handleFilter = (filterValue: string) => {
     const filteredList = getController.userList.filter(user => {
       return user.name.includes(filterValue);
@@ -25,6 +32,11 @@ export const MainScreen: React.FC = () => {
     setUsersFiltered(filteredList);
     setValue(filterValue);
   };
+
+  useEffect(() => {
+    handleController.ListUsers();
+  }, [getController.saveUserLoading]);
+
   return (
     <Container>
       <StatusBar backgroundColor={theme.colors.white} barStyle="dark-content" />
@@ -48,10 +60,8 @@ export const MainScreen: React.FC = () => {
           style={{height: '100%'}}
           onRefresh={() => handleController.ListUsers()}
           refreshing={getController.loading}
-          keyExtractor={item => item.id.toString()}
-          data={
-            usersFiltered.length === 0 ? usersFiltered : getController.userList
-          }
+          keyExtractor={item => item.age.toString()}
+          data={usersFiltered.length ? usersFiltered : getController.userList}
           renderItem={({item}) => (
             <UserListComponent
               onPress={() =>

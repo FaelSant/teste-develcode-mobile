@@ -25,7 +25,7 @@ export const RoundedDetailedImage: React.FC<RoundedDetailedImageProps> = ({
           }}
         />
       </TouchableMainImage>
-      <AddPhotoContainer>
+      <AddPhotoContainer onPress={handleAddPhoto}>
         <CameraIcon />
       </AddPhotoContainer>
     </Container>
